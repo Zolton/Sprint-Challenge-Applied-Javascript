@@ -7,7 +7,7 @@ class TabLink {
     
     // Get the `data-tab` value from this.tabElement and store it here
     //single?
-    this.tabData = document.querySelector(`.tab[data-tab="${this.tabElement.dataset.tab}"]`)
+    this.tabData = tabElement.dataset.tab
     console.log("this.tabData is " + this.tabData)
   
     
@@ -16,13 +16,14 @@ class TabLink {
     
  
     // Check to see if this.tabData is equal to 'all'
-    if(this.tabData === document.querySelector(`.tab[data-tab="all"`)){
+    if(this.tabData === 'all'){
+      //'document.querySelector(`.tab[data-tab="all"`')
       // If `all` is true, select all cards regardless of their data attribute values
       this.cards = document.querySelectorAll(".card")
       console.log ("this.cards when true is " + this.cards)
     } else {
       // else if `all` is false, only select the cards with matching this.tabData values
-     this.cards = this.tabData
+     this.cards = document.querySelectorAll(`.card[data-tab="${this.tabData}"]`)
      console.log ("this.cards when false is " + this.cards)
     }
    
@@ -30,16 +31,16 @@ class TabLink {
      // Map over the newly converted NodeList we just created in our if statement above. 
      //Convert each this.cards element into a new instance of the TabCard class. 
      //Pass in a card object to the TabCard class. 
+
     this.cards = Array.from(this.cards).map(test);
-    function test (asdf) {
-      this.itemElement = document.querySelectorAll(".card")
-      //document.querySelector(`.card[data-tab="${this.tabElement.dataset.tab}"]`)
-      new TabCard(this.itemElement)
+    function test () {
+      this.itemElement = document.querySelector(`.card [data-tab="${tabElement.dataset.tab}"]`)
+      return this.itemElement = new TabCard(this.itemElement)
     }
 
-    // Add a click event that invokes this.selectTab
-    this.tabElement.addEventListener("click", this.selectTab.bind(this));
-  }
+  //   // Add a click event that invokes this.selectTab
+      this.tabElement.addEventListener("click", this.selectTab(e));
+}
 
   selectTab(){
 
@@ -101,6 +102,6 @@ TabLink and pass in each tab as a parameter
 let tabs = document.querySelectorAll(".tab");
 
 tabs.forEach(callback) 
-function callback (Element) {
-  return new TabLink(Element)
+function callback (tabElement) {
+  return new TabLink(tabElement)
 }
