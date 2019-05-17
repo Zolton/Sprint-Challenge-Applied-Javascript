@@ -33,13 +33,13 @@ class TabLink {
      //Pass in a card object to the TabCard class. 
 
     this.cards = Array.from(this.cards).map(test);
-    function test () {
-      this.itemElement = document.querySelector(`.card [data-tab="${tabElement.dataset.tab}"]`)
-      return this.itemElement = new TabCard(this.itemElement)
+    function test (card) {
+      //card.itemElement = document.querySelector(`.card [data-tab="${tabElement.dataset.tab}"]`)
+      return new TabCard(card)
     }
 
   //   // Add a click event that invokes this.selectTab
-      this.tabElement.addEventListener("click", this.selectTab(e));
+      this.tabElement.addEventListener("click", () => this.selectTab());
 }
 
   selectTab(){
@@ -48,10 +48,7 @@ class TabLink {
     const tabs = document.querySelectorAll(".tab");
     
     // Iterate through the NodeList removing the .active-tab class from each element
-    tabs.forEach(activeTabRemoval) 
-      function activeTabRemoval (asdf) {
-      asdf.classList.remove(".active-tab")
-      }
+    tabs.forEach(activeTabRemoval => activeTabRemoval.classList.remove("active-tab")) 
     
 
     // Select all of the elements with the .card class on them
